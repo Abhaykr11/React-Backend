@@ -1,18 +1,48 @@
 import { response, Router } from "express";
-const router=Router();
+const router = Router();
+import studentModel from "../../models/studentModel.js";
+import RESPONSE from "../../config/global.js";
 
-router.post('/',(req,res)=>{
-    try{
-        const{name,rollno,email}=req.body;
+router.post("/", (req, res) => {
+  try {
+    const { name, rollno, email } = req.body;
 
-        console.log({name,rollno,email});
+    if (!name || name == undefined) {
+     const response=RESPONSE.REQUIRED;
+     return res.json({
+        code:response.code,
+        message:"name "+response.message,
+     });
+    }
+    if (!rollno || rollno == undefined) {
+        const response=RESPONSE.REQUIRED;
+        return res.json({
+           code:response.code,
+           message:"roll "+response.message,
+        });
+       }
+       if (!email || email == undefined) {
+        const response=RESPONSE.REQUIRED;
+        return res.json({
+           code:response.code,
+           message:"email "+response.message,
+        });
+       }
+   
+    
 
-    res.json({
-        responseMessage:"All Good",
+    console.log({ name, rollno, email });
+
+    studentModel.create({
+      name: name,
+      rollno: rollno,
+      email: email,
     });
 
-    }catch(error){
-        console.log(error);
-    }
+    res.json(RESPONSE.SUCCESS);
+  } catch (error) {
+    console.log("Error!");
+  }
 });
+
 export default router;
