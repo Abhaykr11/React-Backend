@@ -70,9 +70,11 @@ router.post("/",async(req, res) => {
     //   rollno: rollno,
     //   email: email,
     // });
-
-
-    
+    // studentModel.create({
+    //   name: name,
+    //   rollno: rollno,
+    //   email: email,
+    // });
 
     return send(res,RESPONSE.SUCCESS)
   } catch (err) {
