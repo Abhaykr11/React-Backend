@@ -19,11 +19,7 @@ router.post("/",async(req, res) => {
     return send(res,setErrorRes(RESPONSE.REQUIRED,"name"))
     }
     if (!rollno || rollno == undefined) {
-        // const response=RESPONSE.REQUIRED;
-        // return res.json({
-        //    code:response.code,
-        //    message:"roll "+response.message,
-        // });
+       
 
         return send(res,setErrorRes(RESPONSE.REQUIRED,"rollno"))
       }
