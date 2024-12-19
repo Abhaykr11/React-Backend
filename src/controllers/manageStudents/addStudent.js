@@ -33,7 +33,7 @@ router.post("/",async(req, res) => {
         //    code:response.code,
         //    message:"email "+response.message,
         // });
-        return send(res,setErrorRes(RESPONSE.REQUIRED,"email"))
+        return send(res,setErrorRes(RESPONSE.REQUIRED,"email"));
        }
    
     // let isExist=await studentModel.find({
@@ -41,7 +41,10 @@ router.post("/",async(req, res) => {
     // });
 
     let isEmail=validator.isEmail(email);
-    console.log(isEmail);
+    
+    if(!isEmail){
+      return send(res,setErrorRes(RESPONSE.INVALID,"email"));
+    }
 
 
     let isExist = await studentModel.aggregate([
