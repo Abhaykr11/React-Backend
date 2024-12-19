@@ -3,8 +3,10 @@ const router = Router();
 import studentModel from "../../models/studentModel.js";
 import RESPONSE from "../../config/global.js";
 import { send, setErrorRes } from "../../helper/responseHelper.js";
+import { STATE } from "../../config/Constants.js";
+import validator from "validator";
 
-router.post("/", (req, res) => {
+router.post("/",async(req, res) => {
   try {
     const { name, rollno, email } = req.body;
 
@@ -34,22 +36,44 @@ router.post("/", (req, res) => {
         return send(res,setErrorRes(RESPONSE.REQUIRED,"email"))
        }
    
+    // let isExist=await studentModel.find({
+    //   rollno:rollno,
+    // });
+
+    let isEmail=validator.isEmail(email);
+    console.log(isEmail);
+
+
+    let isExist = await studentModel.aggregate([
+      {
+        $match: {
+          rollno: rollno,
+          isactive:STATE.ACTIVE,
+        }
+      },
+      
+    ]);
+    
+    if (isExist.length > 0) {
+      return send(res.setErrorRes(RESPONSE.ALREADY_EXISTS))
+    }
+
+
+    // console.log({ name, rollno, email });
     
 
-    console.log({ name, rollno, email });
-    
+    // studentModel.create({
+    //   name: name,
+    //   rollno: rollno,
+    //   email: email,
+    // });
 
-    studentModel.create({
-      name: name,
-      rollno: rollno,
-      email: email,
-    });
+
     
 
     return send(res,RESPONSE.SUCCESS)
-  } catch (error) {
-    
-    return send(RESPONSE.UNKNOWN_ERR)
+  } catch (err) {
+    console.error('An error occurred:', err);
   }
 });
 

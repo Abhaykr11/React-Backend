@@ -11,7 +11,14 @@ const RESPONSE={
         code:201,
         message:"is mandatory"
     },
-
+ALREADY_EXISTS:{
+    code:202,
+    message:" already exists"
+},
+INVALID:{
+    code:203,
+    message:" is invalid",
+},
 
 };
 export default RESPONSE;

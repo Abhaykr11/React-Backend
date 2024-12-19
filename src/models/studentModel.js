@@ -15,7 +15,7 @@ email:{
 },
 isactive:{
     type:Number,
-    default:0,
+    default:1,
 },
 // Image:{
 //     type: [String],
