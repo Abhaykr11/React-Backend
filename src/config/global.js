@@ -19,6 +19,10 @@ INVALID:{
     code:203,
     message:" is invalid",
 },
+NOT_FOUND:{
+    code:203,
+    message:" not found"
+},
 
 };
 export default RESPONSE;

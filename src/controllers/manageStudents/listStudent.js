@@ -8,9 +8,15 @@ import validator from "validator";
 
 router.get("/",async(req, res) => {
   try {
+let student_id=req.query.student_id;
+    console.log(student_id)
+
+
+
     let studentData=await studentModel.aggregate([
         {
             $match:{
+                _id:student_id,
                 isactive:STATE.ACTIVE,
             },
         },
@@ -22,7 +28,9 @@ router.get("/",async(req, res) => {
         }
     ]);
     
-
+    if(studentData.length==0){
+      return send(res,setErrorRes(RESPONSE.NOT_FOUND, "student data"))
+    }
     return send(res,RESPONSE.SUCCESS, studentData)
   } catch (err) {
     console.error('An error occurred:', err);
